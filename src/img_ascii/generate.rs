@@ -6,7 +6,13 @@ const ASCII_LIST: [&str; ASCII_LIST_LENGTH] = [
 const RGB_8_BYTE_VAL_FLOAT: f32 = 255.0;
 impl ImageASCII { 
      pub fn gen_art(&self, path: &str) -> String {
-        let img = image::open(path).unwrap();
+        let mut ascii_l: [&str; ASCII_LIST_LENGTH] = ASCII_LIST;
+
+        if self.reversed_ascii {
+            ascii_l.reverse()
+        }
+
+        let img = image::open(path).unwrap(); 
         let mut img_buff: image::ImageBuffer<image::Rgba<u8>, Vec<u8>> = image::imageops::resize(&img, self.width, self.height, image::imageops::FilterType::Lanczos3);
 
         if img.width() >= self.width || img.height() >= self.height {
@@ -26,7 +32,7 @@ impl ImageASCII {
             if p[3] == 0 {
                 rgb_color = 0.0;
             }
-            img_content.push_str(ASCII_LIST[rgb_color as usize]);
+            img_content.push_str(ascii_l[rgb_color as usize]);
             count_x += 1;
         }
         img_content

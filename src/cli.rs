@@ -5,6 +5,8 @@
     path: String,
     width: u32,
     heigth: u32,
+    reversed_ascii: bool,
+    colorized: bool,
 }
 
 impl CliParams {
@@ -19,6 +21,15 @@ impl CliParams {
      pub fn heigth(&self) -> &u32{
         &self.heigth
     }
+    
+     pub fn reversed_ascii(&self) -> &bool {
+         &self.reversed_ascii
+     }
+
+    pub fn colorized(&self) -> &bool {
+         &self.colorized
+     }
+
 }
 
 impl CliParams{ 
@@ -32,6 +43,14 @@ impl CliParams{
 
      fn set_heigth(&mut self) -> &mut u32{
         &mut self.heigth
+    }
+
+    fn set_reversed_ascii(&mut self) -> &mut bool {
+         &mut self.reversed_ascii
+     }
+
+    fn set_colorized(&mut self) -> &mut bool {
+        &mut self.colorized
     }
 
 }

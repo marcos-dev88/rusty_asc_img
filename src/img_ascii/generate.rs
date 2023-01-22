@@ -36,9 +36,9 @@ impl ImageASCII {
                 rgb_color = 0.0;
             }
 
-            let mut ascii_val = ascii_l[rgb_color as usize].to_string();
+            let mut ascii_val: String = ascii_l[rgb_color as usize].to_string();
             if self.colorized { 
-                ascii_val  = format!("{}{}\x1B[0m", get_rgb_col(p[0], p[1], p[2]), ascii_l[rgb_color as usize]);
+                ascii_val  = format!("{}{}\x1B[0m", rgb_to_ansi_str(p[0], p[1], p[2]), ascii_l[rgb_color as usize]);
             }
             img_content.push_str(&ascii_val.into_boxed_str());
             count_x += 1;
@@ -47,7 +47,7 @@ impl ImageASCII {
     }
 }
 
-fn get_rgb_col(pixel_r: u8, pixel_g: u8, pixel_b: u8) -> String {
+fn rgb_to_ansi_str(pixel_r: u8, pixel_g: u8, pixel_b: u8) -> String {
     format!("\x1B[38;2;{};{};{}m", pixel_r, pixel_g, pixel_b)
 }
 

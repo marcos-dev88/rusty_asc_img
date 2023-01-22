@@ -1,4 +1,6 @@
 use crate::img_ascii::ImageASCII;
+use std::format;
+
 const ASCII_LIST_LENGTH: usize = 15;
 const ASCII_LIST: [&str; ASCII_LIST_LENGTH] = [
     " ", ".", ",", "-", "~", "+", "=", "7", "8", "9", "$", "W", "#", "@", "Ñ",
@@ -29,14 +31,24 @@ impl ImageASCII {
             }
 
             let mut rgb_color: f32 = (density * get_rgb_byte_color(p[0], p[1], p[2])).round();
+
             if p[3] == 0 {
                 rgb_color = 0.0;
             }
-            img_content.push_str(ascii_l[rgb_color as usize]);
+
+            let mut ascii_val = ascii_l[rgb_color as usize].to_string();
+            if self.colorized { 
+                ascii_val  = format!("{}{}\x1B[0m", get_rgb_col(p[0], p[1], p[2]), ascii_l[rgb_color as usize]);
+            }
+            img_content.push_str(&ascii_val.into_boxed_str());
             count_x += 1;
         }
         img_content
     }
+}
+
+fn get_rgb_col(pixel_r: u8, pixel_g: u8, pixel_b: u8) -> String {
+    format!("\x1B[38;2;{};{};{}m", pixel_r, pixel_g, pixel_b)
 }
 
 fn get_rgb_byte_color(pixel_r: u8, pixel_g: u8, pixel_b: u8) -> f32 {

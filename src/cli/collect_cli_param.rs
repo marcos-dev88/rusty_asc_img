@@ -2,8 +2,6 @@ use crate::cli::CliParams;
 use std::collections::hash_map::Entry::{Occupied, Vacant};
 use std::{collections::HashMap, fmt::Error};
 
-const DEFAULT_WIDTH: u32 = 75;
-const DEFAULT_HEIGTH: u32 = 35;
 const EMPTY_PARAM_VALUE: i32 = -1;
 
 const PATH_FLAG: &str = "-p";
@@ -13,13 +11,7 @@ const COLORIZED_FLAG: &str = "-c";
 const REVERSED_FLAG: &str = "-rev";
 
 pub fn get_params(params: Vec<String>) -> Result<CliParams, Error> {
-    let mut cli_p: CliParams = CliParams {
-        path: String::new(),
-        width: DEFAULT_WIDTH,
-        heigth: DEFAULT_HEIGTH,
-        reversed_ascii: false,
-        colorized: false,
-    };
+    let mut cli_p: CliParams = CliParams::default();
 
     let map_index = match get_param_index(&params) {
         Ok(map_index) => map_index,

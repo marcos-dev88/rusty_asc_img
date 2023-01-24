@@ -1,5 +1,8 @@
 pub mod collect_cli_param;
 
+const DEFAULT_WIDTH: u32 = 75;
+const DEFAULT_HEIGTH: u32 = 35;
+
 #[derive(Debug)]
 pub struct CliParams {
     path: String,
@@ -50,5 +53,17 @@ impl CliParams {
 
     fn set_colorized(&mut self) -> &mut bool {
         &mut self.colorized
+    }
+}
+
+impl CliParams {
+    pub fn default() -> CliParams {
+        CliParams {
+            path: String::new(),
+            width: DEFAULT_WIDTH,
+            heigth: DEFAULT_HEIGTH,
+            reversed_ascii: false,
+            colorized: false,
+        }
     }
 }

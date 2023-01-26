@@ -9,7 +9,9 @@ const ASCII_LIST: [&str; ASCII_LIST_LENGTH] = [
 const RGB_8_BYTE_VAL_FLOAT: f32 = 255.0;
 const NO_RGB_COLOR_VAL_FLOAT: f32 = 0.0;
 
-const BREAK_LINE: char = '\n';
+const BREAK_LINE_CHAR: char = '\n';
+const BLOCK_CHAR: &str = "█";
+
 const COLOR_RGB_ANSI_STRING: &str = "\x1B[38;2";
 const NO_COLOR_RGB_ANSI_STRING: &str = "\x1B[0m";
 
@@ -30,15 +32,15 @@ impl ImageASCII {
         let mut img_buff: image::ImageBuffer<image::Rgba<u8>, Vec<u8>> = image::imageops::resize(
             &img,
             self.width,
-            self.height,
+            self.heigth,
             image::imageops::FilterType::Lanczos3,
         );
 
-        if img.width() >= self.width || img.height() >= self.height {
+        if img.width() >= self.width || img.height() >= self.heigth {
             img_buff = image::imageops::resize(
                 &img,
                 self.width,
-                self.height,
+                self.heigth,
                 image::imageops::FilterType::Nearest,
             );
         }
@@ -49,7 +51,7 @@ impl ImageASCII {
 
         for p in img_buff.pixels() {
             if count_x == img_buff.width() {
-                img_content.push(BREAK_LINE);
+                img_content.push(BREAK_LINE_CHAR);
                 count_x = 0;
             }
 
@@ -68,6 +70,15 @@ impl ImageASCII {
                     ascii_l[rgb_color as usize],
                     NO_COLOR_RGB_ANSI_STRING
                 );
+
+                if self.block_char {
+                    ascii_char = format!(
+                        "{}{}{}",
+                        rgb_to_ansi_str(p[0], p[1], p[2]),
+                        BLOCK_CHAR,
+                        NO_COLOR_RGB_ANSI_STRING
+                    );
+                }
             }
 
             img_content.push_str(&ascii_char.into_boxed_str());

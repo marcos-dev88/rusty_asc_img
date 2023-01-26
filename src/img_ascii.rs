@@ -3,16 +3,24 @@ pub mod generate;
 #[derive(Debug)]
 pub struct ImageASCII {
     width: u32,
-    height: u32,
+    heigth: u32,
     reversed_ascii: bool,
     colorized: bool,
+    block_char: bool,
 }
 
-pub fn new_image_ascii(w: u32, h: u32, rev: bool, col: bool) -> ImageASCII {
+pub fn new_image_ascii(
+    width: u32,
+    heigth: u32,
+    reversed_ascii: bool,
+    colorized: bool,
+    block_char: bool,
+) -> ImageASCII {
     ImageASCII {
-        width: w,
-        height: h,
-        reversed_ascii: rev,
-        colorized: col,
+        width,
+        heigth,
+        reversed_ascii,
+        colorized,
+        block_char,
     }
 }

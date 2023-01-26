@@ -10,6 +10,7 @@ pub struct CliParams {
     heigth: u32,
     reversed_ascii: bool,
     colorized: bool,
+    use_block_ascii: bool,
 }
 
 impl CliParams {
@@ -31,6 +32,10 @@ impl CliParams {
 
     pub fn colorized(&self) -> &bool {
         &self.colorized
+    }
+
+    pub fn use_block_ascii(&self) -> &bool {
+        &self.use_block_ascii
     }
 }
 
@@ -54,16 +59,21 @@ impl CliParams {
     fn set_colorized(&mut self) -> &mut bool {
         &mut self.colorized
     }
+
+    fn set_use_block_ascii(&mut self) -> &mut bool {
+        &mut self.use_block_ascii
+    }
 }
 
 impl CliParams {
-    pub fn default() -> CliParams {
+    pub fn new() -> CliParams {
         CliParams {
             path: String::new(),
             width: DEFAULT_WIDTH,
             heigth: DEFAULT_HEIGTH,
             reversed_ascii: false,
             colorized: false,
+            use_block_ascii: false,
         }
     }
 }

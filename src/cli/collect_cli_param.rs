@@ -9,9 +9,10 @@ const WIDTH_FLAG: &str = "-w";
 const HEIGHT_FLAG: &str = "-h";
 const COLORIZED_FLAG: &str = "-c";
 const REVERSED_FLAG: &str = "-rev";
+const USE_BLOCK_ASCII_FLAG: &str = "-b";
 
 pub fn get_params(params: Vec<String>) -> Result<CliParams, Error> {
-    let mut cli_p: CliParams = CliParams::default();
+    let mut cli_p: CliParams = CliParams::new();
 
     let map_index = match get_param_index(&params) {
         Ok(map_index) => map_index,
@@ -55,6 +56,12 @@ pub fn get_params(params: Vec<String>) -> Result<CliParams, Error> {
         *cli_p.set_colorized() = true;
     }
 
+    if map_index.get(USE_BLOCK_ASCII_FLAG).is_some()
+        && map_index[USE_BLOCK_ASCII_FLAG] != EMPTY_PARAM_VALUE
+    {
+        *cli_p.set_use_block_ascii() = true;
+    }
+
     Ok(cli_p)
 }
 
@@ -67,6 +74,7 @@ fn get_param_index(params: &[String]) -> Result<HashMap<&str, i32>, Error> {
             || param == HEIGHT_FLAG
             || param == REVERSED_FLAG
             || param == COLORIZED_FLAG
+            || param == USE_BLOCK_ASCII_FLAG
         {
             let param_value = match map_index.entry(param) {
                 Vacant(entry) => entry.insert(EMPTY_PARAM_VALUE),

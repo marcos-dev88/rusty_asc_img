@@ -23,7 +23,7 @@ $ git clone https://github.com/marcos-dev88/rusty_asc_img
 There are 5 flags that you can use in this project:
 
 * **-p** -> Defines your image path **(Required)**;
-* **-w** -> Defines the width of your ASCII art to print in output;
-* **-h** -> Defines the heigth of your ASCII art to print in output;
-* **-c** -> Colorized ASCII art output;
-* **-rev** -> Reverses the gray scale of ASCII art output.
+* **-w** -> Defines the width of your ASCII art to print in output (Optional);
+* **-h** -> Defines the heigth of your ASCII art to print in output (Optional);
+* **-c** -> Colorized ASCII art output (Optional);
+* **-rev** -> Reverses the gray scale of ASCII art output (Optional).

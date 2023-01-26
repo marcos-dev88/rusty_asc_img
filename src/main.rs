@@ -16,6 +16,7 @@ fn main() {
         *cli_p.heigth(),
         *cli_p.reversed_ascii(),
         *cli_p.colorized(),
+        *cli_p.use_block_ascii(),
     );
 
     match new_img_ascii.gen_art(cli_p.path()) {

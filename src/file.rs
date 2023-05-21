@@ -7,7 +7,6 @@ type Result<T> = std::result::Result<T, ErrorFile>;
 pub struct File {
     path: String,
     content: Vec<u8>,
-    save_to: String,
 }
 
 impl File {
@@ -17,10 +16,6 @@ impl File {
 
     pub fn content(&self) -> &Vec<u8> {
         &self.content
-    }
-
-    pub fn save_to(&self) -> &String {
-        &self.save_to
     }
 }
 
@@ -32,18 +27,10 @@ impl File {
     pub fn set_content(&mut self) -> &mut Vec<u8> {
         &mut self.content
     }
-
-    pub fn set_save_to(&mut self) -> &mut String {
-        &mut self.save_to
-    }
 }
 
-pub fn new(path: String, content: Vec<u8>, save_to: String) -> File {
-    File {
-        path,
-        content,
-        save_to,
-    }
+pub fn new(path: String, content: Vec<u8>) -> File {
+    File { path, content }
 }
 
 // Custom file Error

@@ -26,7 +26,6 @@ fn main() {
                 let save_to = file::new(
                     cli_p.save_file_path().to_string(),
                     img_str.as_bytes().to_vec(),
-                    cli_p.save_file_path().to_string(),
                 );
 
                 match save_to.save_to_path() {

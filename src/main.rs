@@ -1,6 +1,7 @@
 use std::env;
 
 pub mod cli;
+pub mod file;
 pub mod img_ascii;
 
 fn main() {
@@ -21,13 +22,25 @@ fn main() {
 
     match new_img_ascii.gen_art(cli_p.path()) {
         Ok(img_str) => {
+            if !cli_p.save_file_path().is_empty() {
+                let save_to = file::new(
+                    cli_p.save_file_path().to_string(),
+                    img_str.as_bytes().to_vec(),
+                );
+
+                match save_to.save_to_path() {
+                    Ok(_) => {
+                        println!("success saved in {}", save_to.path());
+                    }
+                    Err(e) => {
+                        panic!("error to save file: {}", e.message)
+                    }
+                }
+            }
             println!("{}", img_str);
         }
         Err(e) => {
             panic!("error to gen ascii art: {}", e)
         }
     };
-    // let file_name = "./img/test.txt";
-    // let mut file = File::create(file_name).unwrap();
-    // writeln!(file, "{}", img_str).unwrap();
 }

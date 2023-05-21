@@ -6,6 +6,7 @@ const DEFAULT_HEIGTH: u32 = 35;
 #[derive(Debug)]
 pub struct CliParams {
     path: String,
+    save_file_path: String,
     width: u32,
     heigth: u32,
     reversed_ascii: bool,
@@ -16,6 +17,10 @@ pub struct CliParams {
 impl CliParams {
     pub fn path(&self) -> &String {
         &self.path
+    }
+
+    pub fn save_file_path(&self) -> &String {
+        &self.save_file_path
     }
 
     pub fn width(&self) -> &u32 {
@@ -44,6 +49,10 @@ impl CliParams {
         &mut self.path
     }
 
+    fn set_save_file_path(&mut self) -> &mut String {
+        &mut self.save_file_path
+    }
+
     fn set_width(&mut self) -> &mut u32 {
         &mut self.width
     }
@@ -69,6 +78,7 @@ impl CliParams {
     pub fn new() -> CliParams {
         CliParams {
             path: String::new(),
+            save_file_path: String::new(),
             width: DEFAULT_WIDTH,
             heigth: DEFAULT_HEIGTH,
             reversed_ascii: false,

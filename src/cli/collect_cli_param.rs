@@ -10,6 +10,7 @@ const HEIGHT_FLAG: &str = "-h";
 const COLORIZED_FLAG: &str = "-c";
 const REVERSED_FLAG: &str = "-rev";
 const USE_BLOCK_ASCII_FLAG: &str = "-b";
+const SAVE_FILE: &str = "-s";
 
 pub fn get_params(params: Vec<String>) -> Result<CliParams, Error> {
     let mut cli_p: CliParams = CliParams::new();
@@ -48,6 +49,15 @@ pub fn get_params(params: Vec<String>) -> Result<CliParams, Error> {
         };
     }
 
+    if map_index.get(SAVE_FILE).is_some() && map_index[SAVE_FILE] != EMPTY_PARAM_VALUE {
+        *cli_p.set_save_file_path() = match params[(map_index[SAVE_FILE] + 1) as usize].parse() {
+            Ok(val) => val,
+            Err(e) => {
+                panic!("error on get path value: {}", e)
+            }
+        };
+    }
+
     if map_index.get(REVERSED_FLAG).is_some() && map_index[REVERSED_FLAG] != EMPTY_PARAM_VALUE {
         *cli_p.set_reversed_ascii() = true;
     }
@@ -75,6 +85,7 @@ fn get_param_index(params: &[String]) -> Result<HashMap<&str, i32>, Error> {
             || param == REVERSED_FLAG
             || param == COLORIZED_FLAG
             || param == USE_BLOCK_ASCII_FLAG
+            || param == SAVE_FILE
         {
             let param_value = match map_index.entry(param) {
                 Vacant(entry) => entry.insert(EMPTY_PARAM_VALUE),

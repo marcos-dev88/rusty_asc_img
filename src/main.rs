@@ -8,7 +8,7 @@ fn main() {
     let cli_p = match cli::collect_cli_param::get_params(env::args().collect()) {
         Ok(cli_p) => cli_p,
         Err(e) => {
-            panic!("error to get params: {}", e)
+            panic!("error to get params: {}", e.message)
         }
     };
 
@@ -19,6 +19,10 @@ fn main() {
         *cli_p.colorized(),
         *cli_p.use_block_ascii(),
     );
+
+    if cli_p.path().is_empty() {
+        panic!("path is not defined, please define your path using flag '-p' like:\n asc2 -p your-image-path.png\n\t\t")
+    }
 
     match new_img_ascii.gen_art(cli_p.path()) {
         Ok(img_str) => {
@@ -40,7 +44,7 @@ fn main() {
             println!("{}", img_str);
         }
         Err(e) => {
-            panic!("error to gen ascii art: {}", e)
+            panic!("error to gen ascii art: {}", e.message)
         }
     };
 }

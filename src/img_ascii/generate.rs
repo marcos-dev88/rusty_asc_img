@@ -1,5 +1,5 @@
 use crate::img_ascii::*;
-use std::{fmt::Error, format};
+use std::format;
 
 const ASCII_LIST_LENGTH: usize = 15;
 const ASCII_LIST: [&str; ASCII_LIST_LENGTH] = [
@@ -16,7 +16,7 @@ const COLOR_RGB_ANSI_STRING: &str = "\x1B[38;2";
 const NO_COLOR_RGB_ANSI_STRING: &str = "\x1B[0m";
 
 impl ImageASCII {
-    pub fn gen_art(&self, path: &str) -> Result<String, Error> {
+    pub fn gen_art(&self, path: &str) -> Result<String> {
         let mut ascii_l: [&str; ASCII_LIST_LENGTH] = ASCII_LIST;
         if self.reversed_ascii {
             ascii_l.reverse()
@@ -24,9 +24,7 @@ impl ImageASCII {
 
         let img = match image::open(path) {
             Ok(img) => img,
-            Err(e) => {
-                panic!("error on open image: {}", e);
-            }
+            Err(e) => return Err(new_err(500, e.to_string())),
         };
 
         let mut img_buff: image::ImageBuffer<image::Rgba<u8>, Vec<u8>> = image::imageops::resize(

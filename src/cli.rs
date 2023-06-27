@@ -1,4 +1,8 @@
+use std::fmt::{self, Display};
+
 pub mod collect_cli_param;
+
+type Result<T> = std::result::Result<T, ErrorCli>;
 
 const DEFAULT_WIDTH: u32 = 75;
 const DEFAULT_HEIGTH: u32 = 35;
@@ -86,4 +90,26 @@ impl CliParams {
             use_block_ascii: false,
         }
     }
+}
+
+impl Default for CliParams {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
+#[derive(Debug)]
+pub struct ErrorCli {
+    pub status: u32,
+    pub message: String,
+}
+
+impl Display for ErrorCli {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "error in cli")
+    }
+}
+
+pub fn new_err(status: u32, message: String) -> ErrorCli {
+    ErrorCli { message, status }
 }
